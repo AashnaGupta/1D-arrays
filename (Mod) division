@@ -1,0 +1,128 @@
+package com.company;
+
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int[] a = {1,2,3,4};
+        int number = 789123; int newDigitValue = 5; int digitLocation= 3;
+        System.out.println(onesDigit(1234));
+        System.out.println(tensOnesDigit(1234));
+        System.out.println(tensDigit(1234));
+        System.out.println(hundredsDigit(1234));
+        System.out.println(thousandsDigit(1234));
+        System.out.println(countDigits(1234));
+        System.out.println(countEvenDigits(1234));
+        System.out.println(getDigits(12345,3,0));
+        System.out.println(combineDigits(a));
+        System.out.println(replaceDigit(number,newDigitValue,digitLocation));
+        System.out.println(removeDigitsWithValues(123123,2));
+
+    }
+    //Task 1: Create a function that returns the ones digit from the integer.
+    public static int onesDigit(int a){ // Ex, onesDigit(1234) => 4
+        int rV = 0;
+        rV= a%10;// return value
+        return rV;
+    } // End onesDigit()
+
+    //Create a function that returns the tens AND ones digit from an integer.
+    public static int tensOnesDigit(int a){ // Ex, tensOnesDigit(1234) => 34
+        int rV = 0;
+        rV= a%100;// return value
+        return rV;
+    } // End tensOnesDigit()
+
+    //Looking at Task 2 and the example that returns 34, how can we isolate just the tens digit without including the ones?
+    public static int tensDigit(int a){ // Ex, tensDigit(1234) => 3
+        int rV = 0;
+        rV= (a%100)/10;// return value
+        return rV;
+    } // End tensDigit()
+
+    //Create 2 functions that return the hundreds and thousands digit from an integer.
+    public static int hundredsDigit(int a){ // Ex, hundredsDigit(1234) => 2
+        int rV = 0;
+        rV= (a%1000)/100;// return value
+        return rV;
+    } // End hundredsDigit()
+
+    //Create 2 functions that return the hundreds and thousands digit from an integer.
+    public static int thousandsDigit(int a){ // Ex, thousandsDigit(1234) => 1
+        int rV = 0;
+        rV= a/1000;// return value
+        return rV;
+    } // End thousandsDigit()
+
+    //Create a function that counts the number of digits in a positive integer.
+    public static int countDigits(int a){ //Ex, countDigits(1234) => 4
+        int count = 0;
+        int digit = 0;
+        while (a>0){
+            digit = a%10;//isolated the ones digit
+            a = a/10;//cuts off the ones digit
+            count ++;
+        }return count;
+    } // End countDigits()
+
+    //Create a function that counts the number of even digits in a positive integer
+    public static int countEvenDigits(int a){ // Ex, countEvenDigits(1234) => 2
+        int count = 0;
+        int digit = 0;
+        while (a>0){
+            digit = a%10;//isolated the ones digit
+            a = a/10;//cuts off the ones digit
+            if (a%2 == 0)  //if the number is even, and divided by two, the remainder should be zero
+                count++;
+
+        }return count;
+    } // End countEvenDigits()
+
+    //Create a function that counts the number of even digits in a positive integer
+    public static int getDigits(int a, int biggestDigit, int smallestDigit) { //Create a generic function that returns digits in a given range.
+        int divisor_length = 1;
+        for(int index = 0; index < biggestDigit - smallestDigit + 1; index++){
+            divisor_length = divisor_length *10;
+        }
+        return a%divisor_length;
+    }// end getDigits
+
+    public static int combineDigits(int[] a){ // Ex, combineDigits({1,2,3,4}) => 1234
+        int rV = 0;
+        for (int n = a.length - 1, i = 1; n >= 0; n --, i *= 10){
+            rV += a[n]*i;
+        } return rV;
+    }
+
+    public static int replaceDigit(int number, int newDigitValue, int digitLocation){
+        int divisor_length = 1;
+        for(int index = 0; index < digitLocation +1; index++) {
+            divisor_length = divisor_length * 10;
+        }
+                int numberAtLeft = number / divisor_length;
+                int numberAtRight = number % (divisor_length/10);
+                String sNumber = Integer.toString(numberAtLeft)+ Integer.toString(newDigitValue)
+                        + Integer.toString(numberAtRight);
+                number = Integer.parseInt(sNumber);
+        return number;
+    }
+
+    public static int removeDigitsWithValues(int number, int remove){
+        int rV = 0;
+        int onesDigit = 0;
+        int powerOfTen = 1;
+        while( number != 0){
+            onesDigit = number % 10;
+            number /= 10;
+            if (onesDigit != remove){
+                rV = rV + onesDigit * powerOfTen;
+                powerOfTen *= 10;
+            }
+        }
+        return rV;
+    }
+
+    
+}
+
