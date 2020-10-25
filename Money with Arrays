@@ -1,0 +1,205 @@
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // createMoney()
+        int[] a = createMoney(4, 115);
+        System.out.println("5 15: " + a[0] + " " + a[1]);
+        // copyMoney()
+        int[] b = copyMoney(a);
+        a[1] = 50;
+        System.out.println("5 50: " + a[0] + " " + a[1]);
+        System.out.println("5 15: " + b[0] + " " + b[1]);
+        // dollars()
+        System.out.println("Dollars: 5: " + dollars(a));
+        // cents()
+        System.out.println("Cents: 50: " + cents(a));
+        // moneyToString()
+        System.out.println("$5.50: " + moneyToString(a));
+        int[] c = createMoney(1, 2);
+        System.out.println("$1.02: " + moneyToString(c));
+        // moneyToText()
+        System.out.println("five dollars and fifty cents: " + moneyToText(a));
+        // isGreater()
+        int[] m1 = {8};
+        int[] m2 = {7};
+        System.out.println("isGreater: true: " + isGreaterThan(m1, m2));
+        // isEqual()
+        System.out.println("isEqual: false: " + isEqual(m1, m2));
+        // adder()
+        a = createMoney(1, 10);
+        b = createMoney(2, 20);
+        adder(a, b);
+        System.out.println("$3.30: " + moneyToString(a));
+        System.out.println("$2.20: " + moneyToString(b));
+        // add()
+        b = add(a, b);
+        System.out.println("$3.30: " + moneyToString(a));
+        System.out.println("$5.50: " + moneyToString(b));
+        // subber()
+        a = createMoney(4, 30);
+        b = createMoney(1, 20);
+        subber(a, b);
+        System.out.println("$3.10: " + moneyToString(a));
+        System.out.println("$1.20: " + moneyToString(b));
+        // sub()
+        b = sub(a, b);
+        System.out.println("$3.10: " + moneyToString(a));
+        System.out.println("$1.90: " + moneyToString(b));
+        // payWith20()
+        int[] owe = createMoney(3, 20);
+        int[] change = createMoney(20, 0);
+        change = payWith20(owe);
+        System.out.println("$16.80: " + moneyToString(change));
+        //applyInterest
+        int interest = 5;
+        int[] balance = {3, 25};
+        balance = applyInterest(balance, interest);
+        balance = createMoney(balance[0], balance[1]);
+        System.out.println("$3.41: " + moneyToString(balance));
+
+        int[][] monies = {{1,50},{2,30},{1,0},{2,5}};
+        bubbleSortMoney(monies);
+        for(int i=0; i<monies.length; i++)
+            System.out.println(moneyToString(monies[i]));
+
+    }
+
+    public static int[] createMoney(int dollars, int cents) {
+        if (cents > 99) {
+            dollars = dollars + 1;
+            cents = cents - 100;
+        }
+        int[] a = {dollars, cents};
+        return a;
+    }
+
+    public static int[] copyMoney(int[] money) {
+        int[] b = new int[money.length];
+        for (int i = 0; i < money.length; i++) {
+            b[i] = money[i];
+        }
+        return b;
+    }
+
+    public static int dollars(int[] money) {
+        int rV = money[0];
+        return rV;
+    }
+
+    public static int cents(int[] money) {
+        int rV = money[1];
+        return rV;
+    }
+
+    public static String moneyToString(int[] money) {
+        if (money[1] < 10)
+            return ("$" + money[0] + ".0" + money[1]);
+        else
+            return ("$" + money[0] + "." + money[1]);
+    }
+
+    public static String moneyToText(int[] money) {
+        String[] below20 = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
+                "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+        String[] above20 = {"zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
+
+        String cents = "";
+        if (money[1] == 0)
+            cents = "";
+        else if (money[1] / 10 >= 1 && (money[1] % 10 == 0))
+            cents = (" and " + (above20[money[1] / 10] + " cents"));
+        else
+            cents = (" and " + (above20[money[1] / 10]) + " " + (below20[money[1] % 10]) + " cents");
+
+        if (money[0] / 100 <= 9 && money[0] / 100 >= 1) {
+            if (((money[0] % 100) / 10) >= 1 && money[0] % 10 == 0)
+                return (below20[(money[0] / 100)] + " hundred and ") + (above20[((money[0] % 100) / 10)]) + " dollars" + cents;
+            if (((money[0] % 100) / 10) == 0 && money[0] % 10 != 0)
+                return (below20[(money[0] / 100)] + " hundred and ") + (below20[(money[0] % 10)]) + " dollars" + cents;
+            if (((money[0] % 100) / 10) >= 1 && money[0] % 10 >= 1)
+                return (below20[(money[0] / 100)] + " hundred and ") + (above20[((money[0] % 100) / 10)]) + " " + (below20[(money[0] % 10)]) + " dollars" + cents;
+            return (below20[(money[0] / 100)] + " hundred dollars" + cents);
+        }
+        if (money[0] / 100 == 0 && ((money[0] % 100) / 10) > 1)
+            if (money[0] % 10 >= 1)
+                return (above20[((money[0] % 100) / 10)]) + " " + (below20[(money[0] % 10)]) + " dollars" + cents;
+
+        return (below20[(money[0])]) + " dollars" + cents;
+    }
+
+    public static boolean isGreaterThan(int[] m1, int[] m2) {
+        boolean isBoolean = false;
+        if (m1[0] > m2[0])
+            isBoolean = true;
+        return isBoolean;
+    }
+
+    public static boolean isEqual(int[] m1, int[] m2) {
+        boolean isBoolean = false;
+        if (m1[0] == m2[0])
+            isBoolean = true;
+        return isBoolean;
+    }
+
+    public static void adder(int[] m1, int[] m2) {
+        m1[0] = m1[0] + m2[0];
+        m1[1] = m1[1] + m2[1];
+        if (m1[1] > 99) {
+            m1[0] = m1[0] + 1;
+            m1[1] = m1[1] - 100;
+        }
+    }
+
+    public static int[] add(int[] m1, int[] m2) {
+        int[] add = new int[2];
+        add[0] = m1[0] + m2[0];
+        add[1] = m1[1] + m2[1];
+        if (add[1] > 99) {
+            add[0] = add[0] + 1;
+            add[1] = add[1] - 100;
+        }
+        return add;
+    }
+
+    public static void subber(int[] m1, int[] m2) {
+        m1[0] = m1[0] - m2[0];
+        m1[1] = m1[1] - m2[1];
+        if (m1[1] < 0) {
+            m1[0] = m1[0] - 1;
+            m1[1] = 100 + m1[1];
+        }
+    }
+
+    public static int[] sub(int[] m1, int[] m2) {
+        int[] sub = new int[2];
+        sub[0] = m1[0] - m2[0];
+        sub[1] = m1[1] - m2[1];
+        if (sub[1] < 0) {
+            sub[0] = sub[0] - 1;
+            sub[1] = 100 + sub[1];
+            if (sub[1] == 0)
+                sub[0] = sub[0] - 1;
+        }
+        return sub;
+    }
+
+    public static int[] payWith20(int[] owe) {
+        int[] change = new int[2];
+        if (owe[1] != 0) {
+            change[0] = 20 - owe[0] - 1;
+            change[1] = 100 - owe[1];
+        } else
+            change[0] = 20 - owe[0];
+        return change;
+    }
+
+    public static int[] applyInterest(int[] balance, int interest) {
+        int dollars = balance[0] * interest * 100;
+        int cents = balance[1] * interest;
+        interest = (dollars + cents) / 100;
+        balance[1] = balance[1] + interest;
+        return balance;
+    }
+}
