@@ -1,0 +1,133 @@
+package com.company;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int[] a = {-1,0,3,-4,0,-6,0,0,-9,10};
+        int n = 10; int x = 0;
+        int b = 1234;
+	    System.out.println(sum(a));//33
+        System.out.println(countZero(a));
+        System.out.println(countPositive(a));
+        System.out.println(countNegative(a));
+        printArray(a);
+        System.out.println(arrayToString(a));
+        
+        int[] Arr = copy(a);
+        printArray(Arr);
+        Arr = bigger(a,n,x);
+        printArray(Arr);
+        Arr = smaller(a);
+        printArray(Arr);
+        Arr = splitDigits(b);
+        printArray(Arr);
+        Arr = reverse(a);
+        printArray(Arr);
+
+    }
+
+    public static int sum(int[]a){
+       int rV = 0;
+       for(int i=0; i<a.length;i++)//goes through the length of the array
+           rV = rV + a[i];//each pass will add the index to the sum that you had
+        return rV;
+    }//End sum() Returns the sum of all elements in a.
+
+    public static int countZero(int[] a){
+        int rV =0;
+        for(int i =0; i<a.length;i++)
+            if(a[i]==0)
+                rV++;
+        return rV;
+    }//Returns the number of times 0 appears in a.
+
+    public static int countPositive(int[] a){
+        int rV =0;
+        for(int i =0; i<a.length;i++)
+            if(a[i]>=0)
+                rV++;
+        return rV;
+    }// Returns the number of positives in a.
+
+    public static int countNegative(int[] a){
+        int rV =0;
+        for(int i =0; i<a.length;i++)
+            if(a[i]<0)
+                rV++;
+        return rV;
+    }// Returns the number of negatives in a.
+
+    public static void printArray(int[] a){
+        String rV = "{";
+        for(int i =0; i < a.length;i++) {
+            if (i == a.length - 1)
+                rV = rV + a[i] + "}";
+            else
+                rV = rV + a[i] + ",";
+        }
+        System.out.println(rV);
+    }// Prints array a with {}'s, and commas. Ex,"{1, 2, 3}"
+
+    public static String arrayToString(int[] a){
+        String rV = "{";
+        for(int i =0; i < a.length;i++) {
+            if (i == a.length - 1)
+                rV = rV + a[i] + "}";
+            else
+                rV = rV + a[i] + ",";
+        }
+        return (rV);
+    }// Returns a String representation of a. Ex, "{1, 2, 3}"
+
+    public static int [] copy(int[] a){
+        int[] arrayCopy = new int[a.length];
+       // int[] arrayCopy ;
+        for(int i = 0; i < a.length;i++) {
+         //   System.out.println("copy"+ a[i]);
+             arrayCopy[i] = a[i];
+        }
+        return arrayCopy;
+    }// Returns a copy of a.
+
+    public static int [] bigger(int[] a, int n, int x){
+        int i;
+        int [] bigArray = new int[n+1];
+        for (i=0; i < n; i++){
+            bigArray[i] = a[i];
+            bigArray[n]  = x;
+        }
+        return bigArray;
+
+    }// Returns a with an extra spot at the end, value 0
+
+    public static int[] smaller(int[] a){
+        int [] smallArray = new int[a.length -1];
+        for (int i = 0; i < smallArray.length; i++){
+            smallArray[i] = a[i];
+        }
+        return smallArray;
+    }// Returns a with the last spot cut off.
+
+    public static int [] splitDigits(int b){
+        int j =0;
+        int len = Integer.toString(b).length();
+        int [] splitArray = new int [len];
+        while(b!=0){
+            splitArray[len-j-1] = b%10;
+            b=b/10;
+            j++;
+        }
+        return splitArray;
+    } // Returns an array with a single digit in each spot. Assume the int a is positive or 0.
+    public static int[] reverse(int[]a) {
+        int storage = 0;
+        for (int i = 0; i < a.length / 2; i++) {
+            storage = a[i];
+            a[i] = a[a.length - 1 - i];
+            a[a.length - 1 - i] = storage;
+        }
+        return a;
+    }
+
+
+}
